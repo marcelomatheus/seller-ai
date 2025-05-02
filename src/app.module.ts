@@ -4,6 +4,9 @@ import { AppService } from './app.service';
 import { OpenaiModule } from './openai/openai.module';
 import { ChatModule } from './chat/chat.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { PrismaService } from './prisma/prisma.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   controllers: [AppController],
@@ -14,6 +17,8 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthModule,
+    PrismaModule,
   ],
 })
 export class AppModule {}
