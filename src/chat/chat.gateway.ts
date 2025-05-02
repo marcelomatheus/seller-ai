@@ -21,15 +21,17 @@ export class ChatGateway
   @WebSocketServer()
   server: Server;
   constructor(private readonly openai: OpenaiService) {}
+  private connection: String[] = [];
   afterInit(server: any) {
     console.log('WebSocket server initialized');
   }
 
   handleConnection(client: Socket, ...args: any[]) {
-    console.log('Client connected:', client.id);
+    console.log('Client connected:', client.handshake.query.userId as string);
   }
   handleDisconnect(client: Socket) {
-    console.log('Client disconnected:', client.id);
+    this.connection = this.connection.filter((id) => id !== client.id);
+    console.log('Client disconnected:', this.connection);
   }
 
   @SubscribeMessage('sendMessage')
